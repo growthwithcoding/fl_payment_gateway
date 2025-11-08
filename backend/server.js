@@ -585,9 +585,10 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`
+// Only start server if not in Vercel serverless environment
+if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`
 ╔════════════════════════════════════════════════════════════╗
 ║   Salon Booth Rent Automation - Backend API               ║
 ║                                                            ║
@@ -609,7 +610,8 @@ app.listen(PORT, () => {
 ║   GET    /api/transactions/:id                             ║
 ║   POST   /api/webhook                                      ║
 ╚════════════════════════════════════════════════════════════╝
-  `);
-});
+    `);
+  });
+}
 
 module.exports = app;
