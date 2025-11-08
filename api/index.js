@@ -1,5 +1,2 @@
-// Import the backend server
-const app = require('../backend/server.js');
-
-// Export for Vercel serverless functions
-module.exports = app;
+// Vercel serverless function handler
+module.exports = require('../backend/server.js');
