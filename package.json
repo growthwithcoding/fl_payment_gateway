@@ -1,18 +1,18 @@
 {
-  "name": "salon-booth-rent-automation",
+  "name": "fl-payment-gateway",
   "version": "1.0.0",
-  "description": "Weekly salon booth rent automation app with payment gateway integration",
+  "description": "Salon booth rent automation system",
+  "private": true,
   "scripts": {
-    "install-all": "npm install && cd frontend && npm install && cd ../backend && npm install",
-    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
-    "dev:frontend": "cd frontend && npm run dev",
-    "dev:backend": "cd backend && npm run dev",
-    "build": "cd frontend && npm run build",
+    "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm run dev\"",
+    "build": "cd frontend && npm install && npm run build",
     "start": "cd backend && npm start"
   },
-  "keywords": ["salon", "rent", "payment", "automation"],
-  "author": "",
-  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1"
+  },
   "devDependencies": {
     "concurrently": "^8.2.2"
   }
