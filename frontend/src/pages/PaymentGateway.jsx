@@ -44,27 +44,28 @@ function PaymentGateway() {
   const [selectedStylist, setSelectedStylist] = useState('');
   const [loading, setLoading] = useState(false);
   const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
+  const [automatedExpanded, setAutomatedExpanded] = useState(true); // Auto-expand automated section
 
-  // ACH Payment State
+  // ACH Payment State - Pre-filled with test data
   const [achData, setAchData] = useState({
-    accountHolderName: '',
-    routingNumber: '',
-    accountNumber: '',
+    accountHolderName: 'John Doe',
+    routingNumber: '110000000',
+    accountNumber: '1234567890',
     accountType: 'checking'
   });
 
-  // Credit/Debit Card State
+  // Credit/Debit Card State - Pre-filled with test data
   const [cardData, setCardData] = useState({
-    cardholderName: '',
-    cardNumber: '',
-    expiryMonth: '',
-    expiryYear: '',
-    cvv: '',
-    zipCode: ''
+    cardholderName: 'Jane Smith',
+    cardNumber: '4242 4242 4242 4242',
+    expiryMonth: '12',
+    expiryYear: '2025',
+    cvv: '123',
+    zipCode: '12345'
   });
 
-  // PayPal State
-  const [paypalEmail, setPaypalEmail] = useState('');
+  // PayPal State - Pre-filled with test data
+  const [paypalEmail, setPaypalEmail] = useState('test@example.com');
 
   useEffect(() => {
     fetchStylists();
@@ -326,28 +327,62 @@ function PaymentGateway() {
         will be processed. Use test data to see how different payment methods work.
       </Alert>
 
-      {/* Automated Collection Section */}
-      <Accordion sx={{ mb: 3 }}>
+      {/* Stylist Selector - Moved to top */}
+      <Paper sx={{ p: 3, mb: 3 }}>
+        <Typography variant="h6" gutterBottom>
+          Select Stylist
+        </Typography>
+        <FormControl fullWidth>
+          <InputLabel>Select Stylist</InputLabel>
+          <Select
+            value={selectedStylist}
+            onChange={(e) => setSelectedStylist(e.target.value)}
+            label="Select Stylist"
+          >
+            <MenuItem value="">
+              <em>Choose a stylist to collect rent from</em>
+            </MenuItem>
+            {stylists.map((stylist) => (
+              <MenuItem key={stylist.id} value={stylist.id}>
+                {stylist.name} - Booth {stylist.boothNumber} - ${stylist.weeklyRent.toFixed(2)}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </Paper>
+
+      {/* Automated Collection Section - Highlighted in green */}
+      <Accordion 
+        expanded={automatedExpanded}
+        onChange={() => setAutomatedExpanded(!automatedExpanded)}
+        sx={{ 
+          mb: 3,
+          border: '2px solid',
+          borderColor: 'success.main',
+          '&:before': { display: 'none' }
+        }}
+      >
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           sx={{
-            bgcolor: 'primary.50',
-            '&:hover': { bgcolor: 'primary.100' }
+            bgcolor: 'success.light',
+            '&:hover': { bgcolor: 'success.main' },
+            '& .MuiAccordionSummary-content': { my: 2 }
           }}
         >
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <ScheduleIcon color="primary" />
+            <ScheduleIcon sx={{ color: 'success.dark' }} />
             <Box>
-              <Typography variant="h6">
-                Automated Payment Collection
+              <Typography variant="h6" sx={{ color: 'success.dark', fontWeight: 'bold' }}>
+                ⭐ Automated Payment Collection (Featured)
               </Typography>
-              <Typography variant="caption" color="text.secondary">
-                Set up recurring payment schedules for automatic collection
+              <Typography variant="caption" sx={{ color: 'success.dark' }}>
+                Set up recurring payment schedules for automatic collection - Save time!
               </Typography>
             </Box>
           </Box>
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails sx={{ bgcolor: 'success.50' }}>
           {selectedStylist ? (
             <AutomatedCollection
               stylistId={selectedStylist}
@@ -356,7 +391,7 @@ function PaymentGateway() {
             />
           ) : (
             <Alert severity="warning">
-              Please select a stylist first to configure automated payment collection.
+              Please select a stylist above to configure automated payment collection.
             </Alert>
           )}
         </AccordionDetails>
@@ -365,23 +400,6 @@ function PaymentGateway() {
       <Grid container spacing={3}>
         <Grid item xs={12} md={8}>
           <Paper sx={{ p: 3 }}>
-            <FormControl fullWidth sx={{ mb: 3 }}>
-              <InputLabel>Select Stylist</InputLabel>
-              <Select
-                value={selectedStylist}
-                onChange={(e) => setSelectedStylist(e.target.value)}
-                label="Select Stylist"
-              >
-                <MenuItem value="">
-                  <em>Choose a stylist to collect rent from</em>
-                </MenuItem>
-                {stylists.map((stylist) => (
-                  <MenuItem key={stylist.id} value={stylist.id}>
-                    {stylist.name} - Booth {stylist.boothNumber} - ${stylist.weeklyRent.toFixed(2)}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
 
             <Tabs value={tabValue} onChange={handleTabChange} sx={{ mb: 2 }}>
               <Tab icon={<AccountBalanceIcon />} label="ACH/Bank" />
