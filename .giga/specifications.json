@@ -1,0 +1,22 @@
+[
+  {
+    "fileName": "main-overview.mdc",
+    "description": "Complete system overview documenting the booth rent management system architecture, component relationships, and high-level workflows"
+  },
+  {
+    "fileName": "rent-calculation-models.mdc",
+    "description": "Detailed documentation of the dual rent calculation algorithms (fixed vs percentage-based), including formulas, edge cases, and real-time preview calculations"
+  },
+  {
+    "fileName": "payment-processing-workflow.mdc",
+    "description": "Comprehensive documentation of the multi-payment method processing flows, validation rules, and status handling for ACH, credit card, and PayPal transactions"
+  },
+  {
+    "fileName": "transaction-state-machine.mdc",
+    "description": "Documentation of transaction status workflows, state transitions, status propagation rules, and reconciliation logic between payments and booth rent records"
+  },
+  {
+    "fileName": "data-models.mdc",
+    "description": "Core data models and relationships between transactions, booth rentals, stylists, payments, and status tracking entities"
+  }
+]
